@@ -1,0 +1,14 @@
+083ef6229fcc37bd64627dbcca0c810d *DESCRIPTION
+df390c53434517b304ac5db487184641 *NAMESPACE
+d41d8cd98f00b204e9800998ecf8427e *NEWS
+1b4cb8ff0bf88790733db8fb03fdc498 *R/dvn.r
+a316cf60e469565380a889181a71b642 *inst/CITATION
+cbb5c485ef393c190457d9a2ca9fd7a1 *man/dvDownload.Rd
+781361d791cb4d248e66d5979d4e9f05 *man/dvDownloadInfo.Rd
+f2e2f841c7a21bb03c8cdd4afeb03a9e *man/dvExtractFileIds.Rd
+f424bcca0439aac27284f0a9e2b51f8d *man/dvMetadata.Rd
+06742d48d7cc3ef3aebd5259cf5ea81d *man/dvMetadataFormats.Rd
+9afa7fe527bb13dd8623b85351d1bb74 *man/dvQuery.Rd
+d7c56b8683c8d9f8203774ce07735747 *man/dvSearch.Rd
+d55ec981570fbbf1fbfd4be2bac3ed30 *man/dvSearchFields.Rd
+69745c6d1246fd9ae859241056f57863 *man/dvn-package.Rd
