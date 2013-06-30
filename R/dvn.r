@@ -1,8 +1,3 @@
-#!bin/usr/R
-# Thomas J. Leeper
-# Aarhus University
-# January 30, 2012
-
 dvQuery <- function(verb, query = NULL, dv = "https://dvn.iq.harvard.edu/dvn/", browser=FALSE){
 	# workhorse query function
 	if(!verb %in% c("metadataSearchFields", "metadataSearch", "metadataFormatsAvailable", "metadata", "downloadInfo", "download"))
@@ -21,11 +16,12 @@ dvQuery <- function(verb, query = NULL, dv = "https://dvn.iq.harvard.edu/dvn/", 
 	if(!is.null(query))
 		url <- paste(url,query,sep="/")
 	if(browser)
-		shell.exec(url)
+		browseURL(url)
 	else{
 		xml <- getURL(url, followlocation = TRUE, 
-					ssl.verifypeer = TRUE, ssl.verifyhost = TRUE, 
-					cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"))
+					#ssl.verifypeer = TRUE, ssl.verifyhost = TRUE,
+					ssl.verifypeer = FALSE, ssl.verifyhost = FALSE)
+					#cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"))
 		return(xml)
 	}
 }
@@ -34,6 +30,8 @@ dvQuery <- function(verb, query = NULL, dv = "https://dvn.iq.harvard.edu/dvn/", 
 
 dvSearchFields <- function(dv = "https://dvn.iq.harvard.edu/dvn/", browser=FALSE){
 	xml <- dvQuery(verb = "metadataSearchFields", query = NULL, dv = dv, browser=browser)
+	if(is.null(xml))
+		invisible(NULL)
 	if(browser==FALSE){
 		searchterms <- xpathApply(xmlParse(xml),"//SearchableField")
 		d <- data.frame(matrix(nrow=length(searchterms),ncol=2))
@@ -66,6 +64,8 @@ dvSearch <- function(query, dv = "https://dvn.iq.harvard.edu/dvn/", browser=FALS
 			stop("Must specify query as named list or character string")
 	}
 	xml <- dvQuery(verb = "metadataSearch", query = query, dv = dv, browser=browser)
+	if(is.null(xml))
+		invisible(NULL)
 	if(browser==FALSE){
 		results <- xpathApply(xmlParse(xml),"//study")
 		d <- data.frame(matrix(nrow=length(results),ncol=1))
@@ -79,6 +79,8 @@ dvSearch <- function(query, dv = "https://dvn.iq.harvard.edu/dvn/", browser=FALS
 
 dvMetadataFormats <- function(objectid, dv = "https://dvn.iq.harvard.edu/dvn/", browser=FALSE){
 	xml <- dvQuery(verb = "metadataFormatsAvailable", query = objectid, dv = dv, browser=browser)
+	if(is.null(xml))
+		invisible(NULL)
 	if(browser==FALSE){
 		searchterms <- xpathApply(xmlParse(xml),"//formatAvailable")
 		if(length(searchterms)>0){
@@ -113,6 +115,8 @@ dvMetadata <- function(objectid, format.type=NULL, include=NULL, exclude=NULL,
 			query <- paste(query,"&partialExclude=",exclude,sep="")
 	}
 	xml <- dvQuery(verb = "metadata", query = query, dv = dv, browser=browser)
+	if(is.null(xml))
+		invisible(NULL)
 	if(browser==FALSE)
 		return(xml)
 }
@@ -139,6 +143,8 @@ dvDownloadInfo <- function(fileid, dv = "https://dvn.iq.harvard.edu/dvn/", brows
 	if(is.null(fileid))
 		stop("Must specify fileId")
 	xml <- dvQuery(verb = "downloadInfo", query = fileid, dv = dv, browser=browser)
+	if(is.null(xml))
+		invisible(NULL)
 	if(browser==FALSE){
 		details <- list()
 		services <- xpathApply(xmlParse(xml),"//accessService")
@@ -156,6 +162,8 @@ dvDownloadInfo <- function(fileid, dv = "https://dvn.iq.harvard.edu/dvn/", brows
 		x <- xpathApply(xmlParse(xml),"//accessRestrictions")
 		if(length(x)>0)
 			details$accessRestrictions <- xmlValue(x[[1]])
+		else
+			details$accessRestrictions <- ""
 		
 		details$accessServicesSupported <- data.frame(matrix(nrow=length(services),ncol=4))
 		names(details$accessServicesSupported) <- c("serviceName","serviceArgs","contentType","serviceDesc")
@@ -173,9 +181,11 @@ dvDownloadInfo <- function(fileid, dv = "https://dvn.iq.harvard.edu/dvn/", brows
 dvDownload <- function(fileid, query=NULL, dv = "https://dvn.iq.harvard.edu/dvn/", browser=FALSE){
 	if(is.null(fileid))
 		stop("Must specify fileId")
-	direct <- dvDownloadInfo(fileid)$directAccess
-	if(direct=="false")
-		stop("Data cannot be accessed directly...try using URI from dvExtractFileIds(dvMetadata())")
+	direct <- dvDownloadInfo(fileid)
+	if(is.null(direct))
+		stop("downloadInfo unavailable")
+	if(direct$directAccess=="false")
+		stop(direct$accessRestrictions,"\nData cannot be accessed directly...try using URI from dvExtractFileIds(dvMetadata())")
 	if(is.null(query)){
 		xml <- dvQuery(verb = "download", query = fileid, dv = dv, browser=browser)
 		return(xml)
@@ -197,4 +207,3 @@ dvDownload <- function(fileid, query=NULL, dv = "https://dvn.iq.harvard.edu/dvn/
 		xml <- dvQuery(verb = "download", query = paste(fileid,query,sep=""), dv = dv, browser=browser)
 	}
 }
-
