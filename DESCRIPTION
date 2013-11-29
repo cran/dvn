@@ -1,6 +1,6 @@
 Package: dvn
-Version: 0.3
-Date: 2013-10-13
+Version: 0.3.3
+Date: 2013-11-29
 Title: Access to The Dataverse Network APIs
 Author: Thomas J. Leeper
 Maintainer: Thomas J. Leeper <thosjleeper@gmail.com>
@@ -9,7 +9,7 @@ Description: Provides access to The Dataverse Network APIs via the RCurl package
 License: GPL-2
 URL: https://github.com/leeper/dvn
 BugReports: https://github.com/leeper/dvn/issues
-Packaged: 2013-10-13 12:48:09 UTC; Thomas
+Packaged: 2013-12-02 20:41:19 UTC; Thomas
 NeedsCompilation: no
 Repository: CRAN
-Date/Publication: 2013-10-13 15:13:42
+Date/Publication: 2013-12-02 21:50:19

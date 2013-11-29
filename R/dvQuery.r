@@ -1,7 +1,7 @@
 dvQuery <- function(verb, query = NULL, dv = getOption('dvn'), browser=FALSE, ...){
 	# Data Sharing API workhorse query function
 	if(!verb %in% c("metadataSearchFields", "metadataSearch", "metadataFormatsAvailable", "metadata", "downloadInfo", "download"))
-		stop("API query verb not recognized")
+		warning("API query verb not recognized")
 	if(is.null(dv) || dv=="")
 		stop("Must specify Dataverse URL as 'dv'")
 	else{
@@ -18,10 +18,15 @@ dvQuery <- function(verb, query = NULL, dv = getOption('dvn'), browser=FALSE, ..
 	if(browser)
 		browseURL(url)
 	else{
-		xml <- getURL(url, followlocation = TRUE, 
-					#ssl.verifypeer = TRUE, ssl.verifyhost = TRUE,
-					ssl.verifypeer = FALSE, ssl.verifyhost = FALSE, ...)
-					#cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"))
+	    user <- getOption('dvn.user')
+	    pwd <- getOption('dvn.pwd')
+	    if(!user=='' && !pwd=='')
+	    	userpwd <- paste(user,pwd,sep=':')
+	    else
+	    	userpwd <- NULL
+	    xml <- getURL(url, followlocation = 1L, httpauth=1L, userpwd=userpwd,
+	                       ssl.verifypeer = 0L, ssl.verifyhost = 0L, ...)
+                               #cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"))
 	    if('html' %in% names(xmlChildren(xmlParse(xml)))){
             temp <- htmlTreeParse(xml,useInternalNodes=TRUE)
             out <- 
