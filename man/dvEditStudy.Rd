@@ -8,7 +8,7 @@ dvEditStudy(objectid, xmlfile, dv=getOption('dvn'),
             browser=FALSE, ...)
 }
 \arguments{
-  \item{objectid}{A character string containing the id for a dataverse study (a handle). This could be returned from \code{\link{dvUserStudies}}, \code{\link{dvCreateStudy}}, (or, \code{\link{dvSearch}}, from the Data Sharing API).}
+  \item{objectid}{Either a character string containing the id for a dataverse study (a handle) or an object of class \dQuote{dvStudyAtom}. This could be returned from \code{\link{dvUserStudies}} (or, \code{\link{dvSearch}}, from the Data Sharing API).}
   \item{xmlfile}{The path to an XML file (or a character string of that XML) containing a Qualified Dublin Core Atom/XML document, which specifies the metadata necessary to create the study. See references for an example and \code{\link{dvBuildMetadata}}.}
   \item{dv}{An optional character string specifying the Dataverse to query. Default is the Harvard IQSS Dataverse.}
   \item{user}{A character string containing a dataverse username. Default is \code{options('dvn.user')}.}
@@ -29,13 +29,6 @@ Note: Editing a study only changes the study in \dQuote{draft}. To make those ch
   \item{xml}{A character string containing an XML data structure that includes a study citation and handle.}
 
 If successful, the request will reflect the contents of \code{xmlfile}.
-}
-\references{
-\href{http://swordapp.github.io/SWORDv2-Profile/SWORDProfile.html\#protocoloperations_creatingresource_entry}{Atom entry specification}
-
-\href{https://github.com/IQSS/dvn/blob/develop/tools/scripts/data-deposit-api/atom-entry-study.xml}{Qualified Dublin Core XML example 1}
-
-\href{https://github.com/IQSS/dvn/blob/develop/tools/scripts/data-deposit-api/atom-entry-study2.xml}{Qualified Dublin Core XML example 2}
 }
 \author{Thomas J. Leeper}
 %\note{}

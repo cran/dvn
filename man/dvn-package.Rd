@@ -2,36 +2,19 @@
 \alias{dvn-package}
 \alias{dvn}
 \docType{package}
-\title{Access to The Dataverse Network APIs}
-\description{Provides access to The Dataverse Network Data Sharing and Data Deposit APIs via RCurl.
+\title{Access to Dataverse 3 APIs}
+\description{Access legacy Dataverse (version 3 and below) installations.}
+\details{
+Provides access to The Dataverse Network Data Sharing and Data Deposit APIs for legacy Dataverse installations (versions 3 and below). For current Dataverse installations (versions 4 and above), use \href{https://github.com/IQSS/dataverse-client-r}{``dataverse,'' the official R client for Dataverse}.
 
 The Data Sharing API provides access to archived data (and metadata). The dvn package provides a number of functions to translate API responses into R data structures using the XML package.
 
-The Data Deposit API provides the ability to create and modify Dataverse studies. Support for these features is in ongoing development.}
-\details{
-\tabular{ll}{
-Package: \tab dvn\cr
-Type: \tab Package\cr
-Version: \tab 0.3.3\cr
-Date: \tab 2013-11-29\cr
-License: \tab GPL-2\cr
-}
+The Data Deposit API provides the ability to create and modify Dataverse studies.
 }
 \author{
 Thomas J. Leeper
 
 Maintainer: Thomas J. Leeper <thosjleeper@gmail.com>
-}
-\references{
-\href{http://switch.dl.sourceforge.net/project/dvn/dvn/3.0/dvnapi_v1_0.pdf}{Dataverse Data Sharing API Documentation}
-
-\href{http://dvn.github.io/devguide/features/api/data-deposit/}{Dataverse Data Deposit API Developer's Guide}
-
-\href{http://dvn.github.io/devguide/features/api/data-deposit/v1/}{Dataverse Data Deposit API v1 Developer's Guide}
-
-\href{http://thedata.org/}{The Dataverse Network}
-
-\href{http://thedata.harvard.edu/dvn/}{Harvard IQSS Dataverse}
 }
 \keyword{ package }
 %\seealso{}

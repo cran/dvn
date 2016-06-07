@@ -1,7 +1,8 @@
 exportPattern("^[[:alpha:]]+")
+importFrom(utils, browseURL, zip)
 importFrom(RCurl, getURL, url.exists, curlPerform, basicTextGatherer, curlEscape)
 importFrom(XML, xmlParse, xmlChildren, xmlValue, xpathApply, xmlAttrs, xmlToList, htmlTreeParse)
-importFrom(XML, newXMLNode, addChildren, toString.XMLNode) # for `dvBuildMetadata`
+importFrom(XML, newXMLNode, addChildren, toString.XMLNode, addAttributes) # for `dvBuildMetadata`
 S3method(print, dvDownloadInfo)
 S3method(print, dvStudyAtom)
 S3method(print, dvUserStudies)
